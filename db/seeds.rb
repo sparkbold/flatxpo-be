@@ -25,3 +25,18 @@ include Faker
     views: Faker::Number.between(10,1000)
   )
 end
+
+20.times do
+  app_name = Faker::App.name
+  Project.create(
+    slug: app_name.downcase
+    title: app_name
+    description: Faker::Lorem.paragraph,
+    image: Faker::Avatar.image,
+    github_url: Faker::Internet.url,
+    demo_url: Faker::Internet.url,
+    views: Faker::Number.between(105,987)
+    user_id: Faker::Number.between(1,10)
+  )
+end
+
