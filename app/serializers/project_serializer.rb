@@ -1,6 +1,13 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :slug, :title, :description, :image, :github_url, :demo_url, :views
+  attributes :id, :slug, :title, :description, :image, :github_url, :demo_url, :views, :votes, :comments
   has_one :user
-  has_many :votes, :comments, :project_tags
-  has_many :tags, through: :project_tags
+
+  def votes
+    self.object.votes
+  end
+
+  def comments
+    self.object.comments
+  end
+
 end
