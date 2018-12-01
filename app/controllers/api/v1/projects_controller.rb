@@ -1,6 +1,10 @@
 class Api::V1::ProjectsController < ApplicationController
   before_action :find_project, only: [:show, :edit]
-  
+  before_action :authorized, only: [:create, :edit]
+  def index
+    @projects = Project.all
+    render json: @projects
+  end
   def create
     @project = Project.create(project_params)
     @project.user = current_user
@@ -13,7 +17,8 @@ class Api::V1::ProjectsController < ApplicationController
 
   def show
     if find_project
-      render json: @project
+      # render json: {project: @project, comments: {@project.comments, commenters: @project.commenters, voters: @project.voters} 
+      render json: @project.to_json(include: {comments: { include: :user}})
     end
   end
 

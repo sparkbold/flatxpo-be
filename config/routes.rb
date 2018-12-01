@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
         post '/login', to: 'auth#create'
         get '/profile', to: 'users#profile'
+        get '/projects', to: 'projects#index'
       end
     end
 end

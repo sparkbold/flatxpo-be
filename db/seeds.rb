@@ -7,9 +7,25 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 include Faker 
+# load the gem
+require 'net/http'
+require 'json'
+gif_url = "http://api.giphy.com/v1/gifs/search?q=fail&api_key=dc6zaTOxFJmzC&limit=50&rating=g"
+gif_resp = Net::HTTP.get_response(URI.parse(gif_url))
+gif_buffer = gif_resp.body
+gif_result = JSON.parse(gif_buffer)
+gif_urls = gif_result["data"].map {|data| data["images"]["fixed_height"]["url"]}
+copy_gifs = gif_urls.map(&:dup)
 
 
-10.times do
+user_url = "https://randomuser.me/api/?results=100"
+user_resp = Net::HTTP.get_response(URI.parse(user_url))
+user_buffer = user_resp.body
+user_result = JSON.parse(user_buffer)
+user_avatars = user_result["results"].map{|d| d["picture"]["large"]}
+copy_avatars = user_avatars.map(&:dup)
+
+20.times do
   first = Faker::Name.unique.first_name
   last = Faker::Name.unique.last_name
   User.create(
@@ -20,7 +36,7 @@ include Faker
     password: 'hi',
     phone_number: Faker::PhoneNumber.phone_number,
     bio: Faker::Lorem.paragraph,
-    avatar: Faker::Avatar.image,
+    avatar: copy_avatars.shift,
     github_username: Faker::Internet.unique.user_name,
     role: 'student',
     views: Faker::Number.between(10,1000)
@@ -33,15 +49,15 @@ end
     slug: app_name.downcase.split(" ").join("_"),
     title: app_name,
     description: Faker::SiliconValley.motto,
-    image: Faker::Avatar.image,
+    image: copy_gifs.shift,
     github_url: Faker::Internet.url,
     demo_url: Faker::Internet.url,
     views: Faker::Number.between(105,987),
-    user_id: Faker::Number.between(1,10)
+    user_id: Faker::Number.between(1,20)
   )
 end
 
-20.times do
+68.times do
   Comment.create(
     content: Faker::Lorem.paragraph,
     user_id: Faker::Number.between(1,10),
@@ -49,7 +65,7 @@ end
   )
 end
 
-20.times do
+68.times do
   Vote.create(
     user_id: Faker::Number.between(1,10),
     project_id: Faker::Number.between(1,20)
