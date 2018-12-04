@@ -14,4 +14,6 @@ class Project < ApplicationRecord
 
   alias_attribute :voters, :users
   alias_attribute :commenters, :users
+
+  has_one_attached :img
 end

@@ -17,8 +17,7 @@ class Api::V1::ProjectsController < ApplicationController
 
   def show
     if find_project
-      # render json: {project: @project, comments: {@project.comments, commenters: @project.commenters, voters: @project.voters} 
-      render json: @project.to_json(include: {comments: { include: :user}})
+       render json: @project.to_json(include: {user: current_user, comments: { include: :user}})
     end
   end
 

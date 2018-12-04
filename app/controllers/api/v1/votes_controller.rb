@@ -5,7 +5,7 @@ class Api::V1::VotesController < ApplicationController
     if @vote.save
       render json: { votes: VoteSerializer.new(@vote) }, status: :created
     else
-      render json: { error: 'failed to create project' }, status: :not_acceptable
+      render json: { error: 'failed to create vote' }, status: :not_acceptable
     end
   end
 
