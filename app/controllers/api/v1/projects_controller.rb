@@ -8,10 +8,11 @@ class Api::V1::ProjectsController < ApplicationController
   def create
     @project = Project.create(project_params)
     @project.user = current_user
-    debugger;
+    # debugger;
     @project.img.attach(project_params[:img])
+    
     if @project.save
-      render json: { project: ProjectSerializer.new(@project) }, status: :created
+      render json: { message: "success to create project" }, status: :created
     else
       render json: { error: 'failed to create project' }, status: :not_acceptable
     end
