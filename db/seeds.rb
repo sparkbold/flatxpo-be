@@ -103,6 +103,32 @@ Tag.create(name: "Tools")
   )
 end
   
+6.times do
+  ProjectTag.create(
+    tag_id: 12,
+    project_id: Faker::Number.between(1,20)
+  )
+end
 
+6.times do
+  ProjectTag.create(
+    tag_id: 21,
+    project_id: Faker::Number.between(1,20)
+  )
+end
+
+6.times do
+  ProjectTag.create(
+    tag_id: 6,
+    project_id: Faker::Number.between(1,20)
+  )
+end
+
+6.times do
+  ProjectTag.create(
+    tag_id: 4,
+    project_id: Faker::Number.between(1,20)
+  )
+end
 
 
