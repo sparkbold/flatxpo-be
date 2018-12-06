@@ -1,3 +1,5 @@
+   include Rails.application.routes.url_helpers
+   Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 class Project < ApplicationRecord
   belongs_to :user
 
@@ -16,4 +18,6 @@ class Project < ApplicationRecord
   alias_attribute :commenters, :users
 
   has_one_attached :img
+
+  validates :title, presence: true
 end

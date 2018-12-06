@@ -8,6 +8,8 @@ class Api::V1::ProjectsController < ApplicationController
   def create
     @project = Project.create(project_params)
     @project.user = current_user
+    debugger;
+    @project.img.attach(project_params[:img])
     if @project.save
       render json: { project: ProjectSerializer.new(@project) }, status: :created
     else
@@ -23,7 +25,7 @@ class Api::V1::ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:slug, :title, :description, :image, :github_url, :demo_url, :views)
+    params.require(:project).permit(:slug, :title, :description, :image, :github_url, :demo_url, :views, :img)
   end
 
   def find_project

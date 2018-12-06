@@ -1,5 +1,6 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :slug, :title, :description, :image, :github_url, :demo_url, :views, :votes, :comments, :vote_count, :comment_count, :created_at
+  include Rails.application.routes.url_helpers
+  attributes :id, :slug, :title, :description, :image, :github_url, :demo_url, :views, :votes, :comments, :vote_count, :comment_count, :created_at, :project_tags, :img_url
   has_one :user
 
   def votes
@@ -18,10 +19,14 @@ class ProjectSerializer < ActiveModel::Serializer
     self.object.comments.size
   end
 
-  # def commenter
-  #   self.object.comments.map do |comment|
-  #     {comment: comment, user: comment.user}
-  #   end
-  # end
+  def project_tags
+    self.object.tags.map do |tag|
+      tag.name
+    end
+  end
+
+  def img_url
+    url_for(object.img) if object.img.attached?
+  end
 
 end
