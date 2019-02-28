@@ -10,9 +10,10 @@ class Api::V1::ProjectsController < ApplicationController
     @project.user = current_user
     # debugger;
     @project.img.attach(project_params[:img])
+    ProjectTag.create(tag_id: 23, project_id: @project.id)
     
     if @project.save
-      render json: { message: "success to create project" }, status: :created
+      render json: @project, status: :created
     else
       render json: { error: 'failed to create project' }, status: :not_acceptable
     end

@@ -4,9 +4,9 @@ class User < ApplicationRecord
 
   has_secure_password
   validates :username, uniqueness: {case_sensitive: false}
-  has_many :projects
-  has_many :votes
-  has_many :comments
+  has_many :projects, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_one_attached :img
  

@@ -1,4 +1,5 @@
 class Api::V1::VotesController < ApplicationController
+  skip_before_action :authorized, only: [:create]
   def create
     @vote = Vote.create(vote_params)
     @vote.user = current_user

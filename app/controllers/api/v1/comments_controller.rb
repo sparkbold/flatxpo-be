@@ -1,5 +1,5 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :authorized, only: [:create]
+  skip_before_action :authorized, only: [:create]
   def create
     @comment = Comment.create(comment_params)
     @comment.user = current_user
