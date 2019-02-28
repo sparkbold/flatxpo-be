@@ -2,7 +2,13 @@ class Api::V1::CommentsController < ApplicationController
   skip_before_action :authorized, only: [:create]
   def create
     @comment = Comment.create(comment_params)
-    @comment.user = current_user
+    if current_user 
+      @comment.user = current_user 
+    else 
+      current_user = User.create(first_name: 'Guest')
+      @comment.user = current_user
+    end
+
     if @comment.save
       render json: { comments: CommentSerializer.new(@comment) }, status: :created
     else
