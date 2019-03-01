@@ -4,9 +4,8 @@ class Api::V1::CommentsController < ApplicationController
     @comment = Comment.create(comment_params)
     if current_user 
       @comment.user = current_user 
-    else 
-      current_user = User.create(first_name: 'Guest')
-      @comment.user = current_user
+    else
+      @comment.user = User.find(1)
     end
 
     if @comment.save

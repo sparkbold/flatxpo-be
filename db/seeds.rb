@@ -18,6 +18,21 @@ user_result = JSON.parse(user_buffer)
 user_avatars = user_result["results"].map{|d| d["picture"]["large"]}
 copy_avatars = user_avatars.map(&:dup)
 
+# default user_avatars
+User.create(
+    first_name: 'Guest',
+    last_name: 'Doe',
+    email: 'guest@flatxpo.com',
+    username: 'guest',
+    password: 'hi',
+    phone_number: Faker::PhoneNumber.phone_number,
+    bio: Faker::Lorem.paragraph,
+    avatar: copy_avatars.shift,
+    github_username: Faker::Internet.unique.user_name,
+    role: 'student',
+    views: Faker::Number.between(10,1000)
+  )
+
 20.times do
   first = Faker::Name.unique.first_name
   last = Faker::Name.unique.last_name
@@ -36,15 +51,16 @@ copy_avatars = user_avatars.map(&:dup)
   )
 end
 
-20.times do
+for i in 0..20
   app_name = Faker::App.name
+  image_url = copy_gifs[i]
   Project.create(
     slug: app_name.downcase.split(" ").join("_"),
     title: app_name,
     description: Faker::SiliconValley.motto,
-    image: copy_gifs.shift,
-    github_url: Faker::Internet.url,
-    demo_url: Faker::Internet.url,
+    image: image_url,
+    github_url: image_url,
+    demo_url: image_url,
     views: Faker::Number.between(105,987),
     user_id: Faker::Number.between(1,20)
   )
