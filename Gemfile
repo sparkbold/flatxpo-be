@@ -35,7 +35,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem "database_cleaner"
-  gem "rspec-rails"
+  gem "rspec-rails", ">= 3.8.1"
 end
 
 group :development do
@@ -46,7 +46,7 @@ group :development do
 end
 
 group :test do
-  gem "capybara"
+  gem "capybara", ">= 3.11.1"
   gem "selenium-webdriver"
 end
 
